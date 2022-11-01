@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import com.steprobe.diceinterview.DataState
+import com.steprobe.diceinterview.R
 import com.steprobe.diceinterview.databinding.FragmentArtistSearchBinding
 import com.steprobe.diceinterview.textFlow
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,11 +55,24 @@ class ArtistSearchFragment : Fragment() {
 
     private fun subscribeToArtists() {
         viewModel.artists.observe(viewLifecycleOwner) { artists ->
-            if (artists is DataState.Success) {
-                (binding.artistList.adapter as ArtistsAdapter).submitList(artists.data)
-            } else if (artists is DataState.Error) {
+            when (artists) {
+                is DataState.Success -> onSearchResult(artists.data)
+                is DataState.Error -> onSearchFailed()
+                DataState.Loading -> TODO()
             }
         }
+    }
+
+    private fun onSearchResult(data: List<ArtistDisplayModel>) {
+        (binding.artistList.adapter as ArtistsAdapter).submitList(data)
+    }
+
+    private fun onSearchFailed() {
+        Snackbar.make(requireView(), R.string.search_failed, Snackbar.LENGTH_LONG)
+            .setAction(R.string.search_failed_retry) {
+                viewModel.searchArtists(binding.searchField.text.toString())
+            }
+            .show()
     }
 
     override fun onDestroyView() {

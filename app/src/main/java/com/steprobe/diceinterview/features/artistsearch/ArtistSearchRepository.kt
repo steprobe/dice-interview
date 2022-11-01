@@ -6,12 +6,7 @@ import com.steprobe.diceinterview.network.ArtistSearchDTO
 class ArtistSearchRepository(private val api: MusicBrainzApi) {
 
     suspend fun searchArtists(search: String): List<ArtistSearchDTO> {
-        try {
-            return api.searchArtists(search, PAGE_SIZE, 0).artists
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            return emptyList()
-        }
+        return api.searchArtists(search, PAGE_SIZE, 0).artists
     }
 
     companion object {
