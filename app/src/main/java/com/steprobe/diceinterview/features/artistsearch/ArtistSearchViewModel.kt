@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.steprobe.diceinterview.DataState
+import com.steprobe.diceinterview.di.IODispatcher
 import com.steprobe.diceinterview.network.ArtistSearchDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -20,14 +22,15 @@ fun ArtistSearchDTO.toDisplayModel(): ArtistDisplayModel {
 
 @HiltViewModel
 class ArtistSearchViewModel @Inject constructor(
-    private val repo: ArtistSearchRepository
+    private val repo: ArtistSearchRepository,
+    @IODispatcher private val defaultDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _artists = MutableLiveData<DataState<List<ArtistDisplayModel>>>()
     val artists: LiveData<DataState<List<ArtistDisplayModel>>> = _artists
 
     fun searchArtists(search: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(defaultDispatcher) {
             val artists = try {
                 repo.searchArtists(search).map { it.toDisplayModel() }
             } catch (ex: Exception) {
