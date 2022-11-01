@@ -9,23 +9,27 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.steprobe.diceinterview.R
 
-class ArtistViewHolder(private val root: View) : RecyclerView.ViewHolder(root) {
+class ArtistViewHolder(val root: View) : RecyclerView.ViewHolder(root) {
     val title: TextView = root.findViewById(R.id.artistTitle)
     val tags: TextView = root.findViewById(R.id.artistTags)
 }
 
-class ArtistsAdapter : ListAdapter<ArtistDisplayModel, ArtistViewHolder>(
-    ArtistDisplayModelDiffCallback()
-) {
+class ArtistsAdapter(val onItemClicked: (item: ArtistDisplayModel) -> Unit) :
+    ListAdapter<ArtistDisplayModel, ArtistViewHolder>(
+        ArtistDisplayModelDiffCallback()
+    ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_artist, parent, false)
         return ArtistViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ArtistViewHolder, position: Int) {
+
         val item = getItem(position)
+
         holder.title.text = item.name
         holder.tags.text = item.tags?.take(3)?.joinToString()
+        holder.root.setOnClickListener { onItemClicked(item) }
     }
 }
 

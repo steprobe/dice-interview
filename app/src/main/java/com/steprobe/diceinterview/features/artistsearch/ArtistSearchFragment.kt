@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.steprobe.diceinterview.DataState
 import com.steprobe.diceinterview.R
 import com.steprobe.diceinterview.databinding.FragmentArtistSearchBinding
+import com.steprobe.diceinterview.features.details.ArtistDetailsFragment
 import com.steprobe.diceinterview.textFlow
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.FlowPreview
@@ -40,14 +42,16 @@ class ArtistSearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        subscribeToArtists()
+        binding.artistList.adapter = ArtistsAdapter { artist ->
+            val args = Bundle().apply { putParcelable(ArtistDetailsFragment.ARGS_ARTIST, artist) }
+            findNavController().navigate(R.id.action_search_to_details, args)
+        }
 
-        binding.artistList.adapter = ArtistsAdapter()
+        subscribeToArtists()
 
         // Debouncing so as not to saturate API and get kicked out
         viewLifecycleOwner.lifecycleScope.launch {
             binding.searchField.textFlow().debounce(400).collect {
-                Log.e("STEO", "Searching " + it)
                 viewModel.searchArtists(it)
             }
         }
