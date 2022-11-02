@@ -1,7 +1,6 @@
 package com.steprobe.diceinterview.features.artistsearch
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +42,12 @@ class ArtistSearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.artistList.adapter = ArtistsAdapter { artist ->
-            val args = Bundle().apply { putParcelable(ArtistDetailsFragment.ARGS_ARTIST, artist) }
+
+            val args = Bundle().apply {
+                putString(ArtistDetailsFragment.ARG_ARTIST_ID, artist.id)
+                putString(ArtistDetailsFragment.ARG_ARTIST_TITLE, artist.name)
+            }
+
             findNavController().navigate(R.id.action_search_to_details, args)
         }
 
@@ -68,7 +72,10 @@ class ArtistSearchFragment : Fragment() {
     }
 
     private fun onSearchResult(data: List<ArtistDisplayModel>) {
-        (binding.artistList.adapter as ArtistsAdapter).submitList(data)
+        val list = binding.artistList
+        (list.adapter as ArtistsAdapter).submitList(data) {
+            list.scrollToPosition(0)
+        }
     }
 
     private fun onSearchFailed() {

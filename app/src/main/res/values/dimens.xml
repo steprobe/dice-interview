@@ -1,3 +1,6 @@
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="album_image_size">60dp</dimen>
+    <dimen name="album_thumbnail_h_spacing">20dp</dimen>
+    <dimen name="list_start_margin">10dp</dimen>
+    <dimen name="list_item_v_spacing">20dp</dimen>
 </resources>

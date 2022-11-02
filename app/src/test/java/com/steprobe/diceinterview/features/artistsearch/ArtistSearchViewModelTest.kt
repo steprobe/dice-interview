@@ -34,15 +34,18 @@ class ArtistSearchViewModelTest {
 
     private val dispatcher = StandardTestDispatcher()
 
+    private var mockHandle: AutoCloseable? = null
+
     @Before
     fun setUp() {
-        MockitoAnnotations.openMocks(this)
+        mockHandle = MockitoAnnotations.openMocks(this)
         Dispatchers.setMain(dispatcher)
     }
 
     @After
     fun tearDown() {
         Dispatchers.resetMain()
+        mockHandle?.close()
     }
 
     @Test

@@ -1,6 +1,5 @@
 package com.steprobe.diceinterview.features.artistsearch
 
-import android.os.Parcelable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,15 +12,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.parcelize.Parcelize
 import javax.inject.Inject
 
-@Parcelize
 data class ArtistDisplayModel(
     val id: String?,
     val name: String?,
     val tags: List<String>?
-) : Parcelable
+)
 
 fun ArtistSearchDTO.toDisplayModel(): ArtistDisplayModel {
     return ArtistDisplayModel(id, name, tags?.map { it.name })
