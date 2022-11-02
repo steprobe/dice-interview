@@ -24,7 +24,7 @@ class ArtistSearchViewModel @Inject constructor(
 
     fun searchArtists(search: String) {
 
-        if(search.isEmpty()) {
+        if (search.isEmpty()) {
             _artists.value = DataState.Success(emptyList())
             return
         }
