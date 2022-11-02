@@ -3,7 +3,7 @@ package com.steprobe.diceinterview.features.details
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.steprobe.diceinterview.DataState
-import com.steprobe.diceinterview.network.ArtistDetailsBeginAreaDTO
+import com.steprobe.diceinterview.network.ArtistDetailsAreaDTO
 import com.steprobe.diceinterview.network.ArtistDetailsDTO
 import com.steprobe.diceinterview.network.ArtistDetailsLifeSpanDTO
 import com.steprobe.diceinterview.network.ArtistDetailsReleaseGroupDTO
@@ -74,7 +74,7 @@ class ArtistDetailsViewModelTest {
             argThat { details ->
                 details is DataState.Success &&
                     details.data.disbanded == TEST_ARTIST_DTO.lifeSpan?.ended &&
-                    details.data.placeOfOrigin == TEST_ARTIST_DTO.beginArea?.name &&
+                    details.data.placeOfOrigin == TEST_ARTIST_DTO.area?.name &&
                     details.data.begin == TEST_ARTIST_DTO.lifeSpan?.begin &&
                     details.data.end == TEST_ARTIST_DTO.lifeSpan?.end
             }
@@ -141,7 +141,7 @@ class ArtistDetailsViewModelTest {
         val TEST_ARTIST_DTO = ArtistDetailsDTO(
             id = TEST_ARTIST_ID,
             name = "Test Artist",
-            beginArea = ArtistDetailsBeginAreaDTO("area", "London"),
+            area = ArtistDetailsAreaDTO("area", "London"),
             lifeSpan = ArtistDetailsLifeSpanDTO(
                 ended = true,
                 begin = "1969",

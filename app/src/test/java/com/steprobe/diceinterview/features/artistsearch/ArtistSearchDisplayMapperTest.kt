@@ -1,5 +1,6 @@
 package com.steprobe.diceinterview.features.artistsearch
 
+import com.steprobe.diceinterview.network.ArtistAreaDTO
 import com.steprobe.diceinterview.network.ArtistSearchDTO
 import com.steprobe.diceinterview.network.ArtistTagDTO
 import org.junit.Assert.assertEquals
@@ -10,8 +11,8 @@ class ArtistSearchDisplayMapperTest {
     @Test
     fun `Mapping from DTO to display model should be correct`() {
 
-        val tags = listOf(ArtistTagDTO("rock"), ArtistTagDTO("roll"))
-        val dto = ArtistSearchDTO("id", "name", tags)
+        val tags = listOf(ArtistTagDTO("Rock"), ArtistTagDTO("Roll"))
+        val dto = ArtistSearchDTO("id", "name", ArtistAreaDTO("Location"), tags)
 
         val display = dto.toDisplayModel()
 

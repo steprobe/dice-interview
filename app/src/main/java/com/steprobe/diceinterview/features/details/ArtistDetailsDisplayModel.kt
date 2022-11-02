@@ -27,26 +27,31 @@ fun ArtistDetailsDTO.toAlbumsDisplayModel(): List<AlbumDisplayModel> {
 
 fun ArtistDetailsDTO.toDetailsDisplayModel(): ArtistDetailsDisplayModel {
 
-    val begin = if (lifeSpan?.begin != null) DateTime.parse(lifeSpan.begin).year().asText else ""
-    val end = if (lifeSpan?.end != null) DateTime.parse(lifeSpan.end).year().asText else ""
-
     return ArtistDetailsDisplayModel(
         name = name,
         placeOfOrigin = area?.name,
         disbanded = lifeSpan?.ended ?: false,
-        begin = begin,
-        end = end
+        begin = safeParseDateToYear(lifeSpan?.begin),
+        end = safeParseDateToYear(lifeSpan?.end)
     )
 }
 
 private fun ArtistDetailsReleaseGroupDTO.toDisplayModel(): AlbumDisplayModel {
-    val date = if (firstReleaseDate != null) DateTime.parse(firstReleaseDate).year().asText else ""
     return AlbumDisplayModel(
         id = id,
         title = title,
         type = primaryType,
-        date = date,
+        date = safeParseDateToYear(firstReleaseDate),
         tags = secondaryTypes ?: emptyList(),
         image = null
     )
+}
+
+fun safeParseDateToYear(date: String?): String {
+    date ?: return ""
+    return try {
+        DateTime.parse(date).year().asText
+    } catch (ex: IllegalArgumentException) {
+        return ""
+    }
 }

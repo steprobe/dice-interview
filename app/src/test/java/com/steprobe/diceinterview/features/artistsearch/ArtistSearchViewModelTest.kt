@@ -3,6 +3,7 @@ package com.steprobe.diceinterview.features.artistsearch
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.steprobe.diceinterview.DataState
+import com.steprobe.diceinterview.network.ArtistAreaDTO
 import com.steprobe.diceinterview.network.ArtistSearchDTO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -84,9 +85,9 @@ class ArtistSearchViewModelTest {
         const val SEARCH_TERM = "whatever"
 
         val TEST_ARTISTS = listOf(
-            ArtistSearchDTO("1", "Artist1", listOf()),
-            ArtistSearchDTO("2", "Artist2", listOf()),
-            ArtistSearchDTO("3", "Artist3", listOf())
+            ArtistSearchDTO("1", "Artist1", ArtistAreaDTO("Location"), listOf()),
+            ArtistSearchDTO("2", "Artist2", ArtistAreaDTO("Location"), listOf()),
+            ArtistSearchDTO("3", "Artist3", ArtistAreaDTO("Location"), listOf())
         )
     }
 }
