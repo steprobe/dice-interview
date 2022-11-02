@@ -17,4 +17,6 @@
 
     <string name="duration_disbanded">%1$s to %2$s</string>
     <string name="duration_ongoing">%1$s to present</string>
+
+    <string name="search_hint">Search Artists</string>
 </resources>

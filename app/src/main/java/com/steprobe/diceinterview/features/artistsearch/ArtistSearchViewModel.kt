@@ -12,16 +12,24 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
 import javax.inject.Inject
 
 data class ArtistDisplayModel(
     val id: String?,
     val name: String?,
+    val origin: String?,
     val tags: List<String>?
 )
 
 fun ArtistSearchDTO.toDisplayModel(): ArtistDisplayModel {
-    return ArtistDisplayModel(id, name, tags?.map { it.name })
+    return ArtistDisplayModel(id, name, area?.name, tags?.map { capitalize(it.name) })
+}
+
+fun capitalize(str: String): String {
+    return str.replaceFirstChar {
+        if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+    }
 }
 
 @HiltViewModel

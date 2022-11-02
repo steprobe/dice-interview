@@ -43,7 +43,10 @@ class ArtistDetailsFragment : Fragment() {
         subscribeToAlbums()
 
         viewModel.loadDetails(artistId)
+    }
 
+    override fun onResume() {
+        super.onResume()
         (requireActivity() as MainActivity).setToolbarTitle(
             arguments?.getString(ARG_ARTIST_TITLE) ?: ""
         )

@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:layout_marginTop="@dimen/artist_item_spacing"
+    android:layout_marginBottom="@dimen/artist_item_spacing"
+    android:layout_marginStart="@dimen/list_start_margin">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/artistTitle"
         style="@style/TextAppearance.Material3.TitleMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="The Doors" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/artistTags"
+        android:id="@+id/artistOrigin"
         style="@style/MaterialAlertDialog.Material3.Body.Text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/artistTitle" />
+        app:layout_constraintTop_toBottomOf="@id/artistTitle"
+        tools:text="United States" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/artistTags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/artistOrigin" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
